@@ -33,7 +33,7 @@ export default EmberTetherComponent.extend({
   delayOnChange: true,
   duration: 0,
   effect: 'slide', // fade, slide, none
-  event: 'hover', // hover, click, focus, none
+  event: 'none', // hover, click, focus, none
   hideOn: null,
   role: 'tooltip',
   side: 'top',
@@ -202,6 +202,7 @@ export default EmberTetherComponent.extend({
   /* Methods */
 
   hide() {
+
     if (this.get('isDestroying')) {
       return;
     }
@@ -216,13 +217,6 @@ export default EmberTetherComponent.extend({
   },
 
   didInsertElement() {
-    /*
-      for popovers
-      need to only call hide() when we lose focus on the element and the $target element
-      we only hide event on a click outside of $element and $target
-      maybe only hide if the $element hasn't been hovered into in 500 seconds
-    */
-
     this._super(...arguments);
 
     const target = this.get('target');
@@ -238,97 +232,64 @@ export default EmberTetherComponent.extend({
 
     this.sendAction('onTooltipRender', this);
 
-    /* Setup event handling to hide and show the popover */
-
-    const _hideOn = this.get('_hideOn');
-    const _showOn = this.get('_showOn');
-
-    // NEW
-    const delay = 500;
-    $target.on('mouseenter', () => {
-      this.set('isMouseInTarget', true);
-      this.show();
-    });
-    $target.on('mouseleave', () => {
-      this.set('isMouseInTarget', false);
-      run.later(() => {
-        if (!this.get('isMouseInPopover') && !this.get('isMouseInTarget')) {
-          this.hide();
-        }
-      }, delay);
-    });
-
-    $_tether.on('mouseenter', () => {
-      this.set('isMouseInPopover', true);
-    });
-
-    $_tether.on('mouseleave', () => {
-      this.set('isMouseInPopover', false);
-      run.later(() => {
-        if (!this.get('isMouseInPopover') && !this.get('isMouseInTarget')) {
-          this.hide();
-        }
-      }, delay);
-    });
-
     /* Setup event handling to hide and show the tooltip */
 
-    // if (event !== 'none') {
-    //   const _hideOn = this.get('_hideOn');
-    //   const _showOn = this.get('_showOn');
+    if (event !== 'none') {
+      const _hideOn = this.get('_hideOn');
+      const _showOn = this.get('_showOn');
 
-    //   /* If show and hide are the same (e.g. click), toggle
-    //   the visibility */
+      /* If show and hide are the same (e.g. click), toggle
+      the visibility */
 
-    //   if (_showOn === _hideOn) {
-    //     $target.on(_showOn, () => {
-    //       this.toggle();
-    //     });
-    //   } else {
+      if (_showOn === _hideOn) {
+        $target.on(_showOn, () => {
+          this.toggle();
+        });
+      } else {
 
-    //     /* Else, add the show and hide events individually */
+        /* Else, add the show and hide events individually */
 
-    //     if (_showOn !== 'none') {
-    //       $target.on(_showOn, () => {
-    //         this.show();
-    //       });
-    //     }
+        if (_showOn !== 'none') {
+          $target.on(_showOn, () => {
+            this.show();
+          });
+        }
 
-    //     if (_hideOn !== 'none') {
-    //       $target.on(_hideOn, () => {
-    //         this.hide();
-    //       });
-    //     }
-    //   }
+        if (_hideOn !== 'none') {
+          $target.on(_hideOn, () => {
+            this.hide();
+          });
+        }
+      }
 
-    //   /* Hide and show the tooltip on focus and escape
-    //   for acessibility */
+      /* Hide and show the tooltip on focus and escape
+      for acessibility */
 
-    //   if (event !== 'focus') {
+      if (event !== 'focus') {
 
-    //     /* If the event is click, we don't want the
-    //     click to also trigger focusin */
+        /* If the event is click, we don't want the
+        click to also trigger focusin */
 
-    //     if (event !== 'click') {
-    //       $target.focusin(() => {
-    //         this.show();
-    //       });
-    //     }
+        if (event !== 'click') {
+          $target.focusin(() => {
+            this.show();
+          });
+        }
 
-    //     // $target.focusout(() => {
-    //     //   this.hide();
-    //     // });
-    //   }
+        $target.focusout(() => {
+          this.hide();
+        });
+      }
 
-    //   $target.keydown((keyEvent) => {
-    //     if (keyEvent.which === 27) {
-    //       this.hide();
-    //       keyEvent.preventDefault();
+      $target.keydown((keyEvent) => {
+        if (keyEvent.which === 27) {
+          this.hide();
+          keyEvent.preventDefault();
 
-    //       return false;
-    //     }
-    //   });
-    // }
+          return false;
+        }
+      });
+    }
 
     $target.attr({
       'aria-describedby': `#${this.get('elementId')}`,
@@ -371,6 +332,42 @@ export default EmberTetherComponent.extend({
     }
 
     this.set('offset', offset);
+  },
+
+  didRender() {
+    this._super(...arguments);
+
+    const $target = $(this.get('target'));
+    const _tether = this.get('_tether');
+    const $_tether = $(_tether.element);
+    // NEW
+    const delay = 250;
+
+    $target.on('click', () => {
+      this.set('isMouseInTarget', true);
+      this.show();
+    });
+    $target.on('mouseleave', () => {
+      this.set('isMouseInTarget', false);
+      run.later(() => {
+        if (!this.get('isMouseInPopover') && !this.get('isMouseInTarget')) {
+          this.hide();
+        }
+      }, delay);
+    });
+
+    $_tether.on('mouseenter', () => {
+      this.set('isMouseInPopover', true);
+    });
+
+    $_tether.on('mouseleave', () => {
+      this.set('isMouseInPopover', false);
+      run.later(() => {
+        if (!this.get('isMouseInPopover') && !this.get('isMouseInTarget')) {
+          this.hide();
+        }
+      }, delay);
+    });
   },
 
   /*

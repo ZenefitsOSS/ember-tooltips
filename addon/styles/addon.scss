@@ -1,25 +1,23 @@
 .ember-tooltip {
   max-width: 200px;
-  // color: #fff; // ORIGINAL
-  // background: #3a3c47; // ORIGINAL
-  // text-shadow: -1px -1px 0 rgba(0,0,0,0.2); // ORIGINAL
-  color: black; // NEW
-  background: white; // NEW
-  border: 1px solid black; // NEW
+  // color: #fff;
+  // background: #3a3c47;
+  // text-shadow: -1px -1px 0 rgba(0,0,0,0.2);
+  color: black;
+  background: white;
+  border: 1px solid grey;
 
-  // user-select and pointer-events shouldn't be needed with visibility: hidden/visible;
   // -webkit-touch-callout: none;
   // -webkit-user-select: none;
   // user-select: none;
   pointer-events: none;
 
-  cursor: default; // NEW
+  cursor: default;
   font-size: 14px;
   padding: 6px 10px;
   border-radius: 3px;
   font-family: sans-serif;
 
-  // TOOLTIP ONLY CSS
   // &:after {
   //   content: '';
   //   position: absolute;
@@ -50,6 +48,7 @@
 
 .ember-tooltip {
   opacity: 0;
+
   &.ember-tooltip-slide,
   &.ember-tooltip-fade {
     -webkit-transition: opacity 200ms ease-out, margin 200ms ease-out;
