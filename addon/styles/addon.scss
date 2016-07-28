@@ -1,28 +1,37 @@
 .ember-tooltip {
   max-width: 200px;
-  color: #fff;
-  background: #3a3c47;
-  text-shadow: -1px -1px 0 rgba(0,0,0,0.2);
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
+  // color: #fff; // ORIGINAL
+  // background: #3a3c47; // ORIGINAL
+  // text-shadow: -1px -1px 0 rgba(0,0,0,0.2); // ORIGINAL
+  color: black; // NEW
+  background: white; // NEW
+  border: 1px solid black; // NEW
+
+  // user-select and pointer-events shouldn't be needed with visibility: hidden/visible;
+  // -webkit-touch-callout: none;
+  // -webkit-user-select: none;
+  // user-select: none;
   pointer-events: none;
+
+  cursor: default; // NEW
   font-size: 14px;
   padding: 6px 10px;
   border-radius: 3px;
   font-family: sans-serif;
 
-  &:after {
-    content: '';
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    margin: -5px;
-    background: inherit;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-  }
+  // TOOLTIP ONLY CSS
+  // &:after {
+  //   content: '';
+  //   position: absolute;
+  //   width: 10px;
+  //   height: 10px;
+  //   margin: -5px;
+  //   background: inherit;
+  //   border: 1px solid black;
+  //   -webkit-transform: rotate(45deg);
+  //   -ms-transform: rotate(45deg);
+  //   transform: rotate(45deg);
+  // }
 }
 
 .ember-tooltip.ember-tooltip-target-attached-top:after, .ember-tooltip.ember-tooltip-target-attached-top-left:after, .ember-tooltip.ember-tooltip-target-attached-top-right:after { bottom: 0; }
@@ -41,7 +50,6 @@
 
 .ember-tooltip {
   opacity: 0;
-
   &.ember-tooltip-slide,
   &.ember-tooltip-fade {
     -webkit-transition: opacity 200ms ease-out, margin 200ms ease-out;
@@ -69,6 +77,9 @@
   &[aria-hidden="false"] {
     opacity: 1;
     transition-duration: 100ms; // Shorter hide duration
+
+    // POPOVER ONLY CSS
+    pointer-events: initial;
 
     &.ember-tooltip-slide {
       margin: 0px;
