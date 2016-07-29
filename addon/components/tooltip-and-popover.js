@@ -68,7 +68,7 @@ export default EmberTetherComponent.extend({
   attributeBindings: ['aria-hidden', 'role', 'tabindex'],
   classNames: ['tooltip-and-popover'],
   classNameBindings: ['effectClass'],
-  classPrefix: 'ember-tooltip',
+  classPrefix: 'tooltip-and-popover',
 
   _hideTimer: null,
   _showTimer: null,
@@ -118,13 +118,13 @@ export default EmberTetherComponent.extend({
   }),
 
   effectClass: computed(function() {
-    return `ember-tooltip-${this.get('effect')}`;
+    return `tooltip-and-popover-${this.get('effect')}`;
   }),
 
   positionClass: computed(function() {
     const targetAttachment = this.get('targetAttachment');
 
-    return `ember-tooltip-${targetAttachment.replace(' ', ' ember-tooltip-')}`;
+    return `tooltip-and-popover-${targetAttachment.replace(' ', ' tooltip-and-popover-')}`;
   }),
 
   sideIsVertical: computed(function() {
@@ -162,7 +162,7 @@ export default EmberTetherComponent.extend({
   typeClass: computed(function() {
     const type = this.get('type');
 
-    return type ? `ember-tooltip-${type}` : null;
+    return type ? `tooltip-and-popover-${type}` : null;
   }),
 
   /* Private CPs */
@@ -238,7 +238,7 @@ export default EmberTetherComponent.extend({
     let renderedSide;
 
     ['top', 'right', 'bottom', 'left'].forEach(function(side) {
-      if ($_tether.hasClass(`ember-tooltip-target-attached-${side}`)) {
+      if ($_tether.hasClass(`tooltip-and-popover-target-attached-${side}`)) {
         renderedSide = side;
       }
     });
