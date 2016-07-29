@@ -15,14 +15,14 @@ export default TooltipAndPopoverBaseComponent.extend({
     // NEW
     const delay = 250;
 
-    // TODO(Andrew) make these target-on dynamic
+    // TODO(Andrew) make these target/tether.on events dynamic
     $target.on('click', () => {
       this.set('isMouseInTarget', true);
       this.show();
     });
     $target.on('mouseleave', () => {
       this.set('isMouseInTarget', false);
-      Ember.run.later(() => {
+      run.later(() => {
         if (!this.get('isMouseInPopover') && !this.get('isMouseInTarget')) {
           this.hide();
         }

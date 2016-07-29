@@ -21,7 +21,7 @@ test('It renders', function(assert) {
   assert.equal(this.$().text().trim(), 'template block text',
     'Should render with content');
 
-  assert.ok(this.$().find('.ember-tooltip').length,
+  assert.ok(this.$().find('.tooltip-on-element').length,
     'Should create a tooltip element');
 
 });
