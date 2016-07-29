@@ -1,35 +1,36 @@
 .ember-tooltip {
   max-width: 200px;
-  // color: #fff;
-  // background: #3a3c47;
-  // text-shadow: -1px -1px 0 rgba(0,0,0,0.2);
-  color: black;
-  background: white;
-  border: 1px solid grey;
-
-  // -webkit-touch-callout: none;
-  // -webkit-user-select: none;
-  // user-select: none;
+  color: #fff;
+  background: #3a3c47;
+  text-shadow: -1px -1px 0 rgba(0,0,0,0.2);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
   pointer-events: none;
-
-  cursor: default;
   font-size: 14px;
   padding: 6px 10px;
   border-radius: 3px;
   font-family: sans-serif;
 
-  // &:after {
-  //   content: '';
-  //   position: absolute;
-  //   width: 10px;
-  //   height: 10px;
-  //   margin: -5px;
-  //   background: inherit;
-  //   border: 1px solid black;
-  //   -webkit-transform: rotate(45deg);
-  //   -ms-transform: rotate(45deg);
-  //   transform: rotate(45deg);
-  // }
+  &:after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    margin: -5px;
+    background: inherit;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}
+
+.ember-tooltip.ember-popover {
+  cursor: default;
+  color: black;
+  background: white;
+  border: 1px solid grey;
+  pointer-events: initial;
 }
 
 .ember-tooltip.ember-tooltip-target-attached-top:after, .ember-tooltip.ember-tooltip-target-attached-top-left:after, .ember-tooltip.ember-tooltip-target-attached-top-right:after { bottom: 0; }
@@ -47,7 +48,7 @@
 /* Fade */
 
 .ember-tooltip {
-  opacity: 0;
+  opacity: 0; // should probably just be a tooltip thing
 
   &.ember-tooltip-slide,
   &.ember-tooltip-fade {
@@ -74,11 +75,11 @@
   }
 
   &[aria-hidden="false"] {
-    opacity: 1;
+    opacity: 1; // should probably just be a tooltip thing
     transition-duration: 100ms; // Shorter hide duration
 
     // POPOVER ONLY CSS
-    pointer-events: initial;
+    // pointer-events: initial;
 
     &.ember-tooltip-slide {
       margin: 0px;
