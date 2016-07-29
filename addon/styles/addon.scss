@@ -1,17 +1,22 @@
-.ember-tooltip {
-  max-width: 200px;
-  color: #fff;
-  background: #3a3c47;
-  text-shadow: -1px -1px 0 rgba(0,0,0,0.2);
+// hidden stuff
+
+.tooltip-and-popover {
+  border-radius: 3px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
   pointer-events: none;
+}
+
+.tooltip-on-element {
+  max-width: 200px;
+  color: #fff;
+  background: #3a3c47;
+  text-shadow: -1px -1px 0 rgba(0,0,0,0.2);
   font-size: 14px;
   padding: 6px 10px;
-  border-radius: 3px;
   font-family: sans-serif;
-
+  border-radius: 3px;
   &:after {
     content: '';
     position: absolute;
@@ -25,31 +30,49 @@
   }
 }
 
-.ember-tooltip.ember-popover {
-  cursor: default;
+.popover-on-element {
+  // TODO(Andrew) THIS CLASS SHOULD BE AS UNOPINIONATED AS POSSIBLE
   color: black;
   background: white;
   border: 1px solid grey;
-  pointer-events: initial;
 }
 
-.ember-tooltip.ember-tooltip-target-attached-top:after, .ember-tooltip.ember-tooltip-target-attached-top-left:after, .ember-tooltip.ember-tooltip-target-attached-top-right:after { bottom: 0; }
-.ember-tooltip.ember-tooltip-target-attached-bottom:after, .ember-tooltip.ember-tooltip-target-attached-bottom-left:after, .ember-tooltip.ember-tooltip-target-attached-bottom-right:after { top: 0; }
-.ember-tooltip.ember-tooltip-target-attached-top:after, .ember-tooltip.ember-tooltip-target-attached-bottom:after { left: 50%; }
-.ember-tooltip.ember-tooltip-target-attached-top-left:after, .ember-tooltip.ember-tooltip-target-attached-bottom-left:after { right: 15px; }
-.ember-tooltip.ember-tooltip-target-attached-top-right:after, .ember-tooltip.ember-tooltip-target-attached-bottom-right:after { left: 15px; }
+.tooltip-and-popover.ember-tooltip-target-attached-top:after, .tooltip-and-popover.ember-tooltip-target-attached-top-left:after, .tooltip-and-popover.ember-tooltip-target-attached-top-right:after { bottom: 0; }
+.tooltip-and-popover.ember-tooltip-target-attached-bottom:after, .tooltip-and-popover.ember-tooltip-target-attached-bottom-left:after, .tooltip-and-popover.ember-tooltip-target-attached-bottom-right:after { top: 0; }
+.tooltip-and-popover.ember-tooltip-target-attached-top:after, .tooltip-and-popover.ember-tooltip-target-attached-bottom:after { left: 50%; }
+.tooltip-and-popover.ember-tooltip-target-attached-top-left:after, .tooltip-and-popover.ember-tooltip-target-attached-bottom-left:after { right: 15px; }
+.tooltip-and-popover.ember-tooltip-target-attached-top-right:after, .tooltip-and-popover.ember-tooltip-target-attached-bottom-right:after { left: 15px; }
 
-.ember-tooltip.ember-tooltip-target-attached-left:after, .ember-tooltip.ember-tooltip-target-attached-left-top:after, .ember-tooltip.ember-tooltip-target-attached-left-bottom:after { right: 0; }
-.ember-tooltip.ember-tooltip-target-attached-right:after, .ember-tooltip.ember-tooltip-target-attached-right-top:after, .ember-tooltip.ember-tooltip-target-attached-right-bottom:after { left: 0; }
-.ember-tooltip.ember-tooltip-target-attached-left:after, .ember-tooltip.ember-tooltip-target-attached-right:after { top: 50%; }
-.ember-tooltip.ember-tooltip-target-attached-left-top:after, .ember-tooltip.ember-tooltip-target-attached-right-top:after { bottom: 15px; }
-.ember-tooltip.ember-tooltip-target-attached-left-bottom:after, .ember-tooltip.ember-tooltip-target-attached-right-bottom:after { top: 15px; }
+.tooltip-and-popover.ember-tooltip-target-attached-left:after, .tooltip-and-popover.ember-tooltip-target-attached-left-top:after, .tooltip-and-popover.ember-tooltip-target-attached-left-bottom:after { right: 0; }
+.tooltip-and-popover.ember-tooltip-target-attached-right:after, .tooltip-and-popover.ember-tooltip-target-attached-right-top:after, .tooltip-and-popover.ember-tooltip-target-attached-right-bottom:after { left: 0; }
+.tooltip-and-popover.ember-tooltip-target-attached-left:after, .tooltip-and-popover.ember-tooltip-target-attached-right:after { top: 50%; }
+.tooltip-and-popover.ember-tooltip-target-attached-left-top:after, .tooltip-and-popover.ember-tooltip-target-attached-right-top:after { bottom: 15px; }
+.tooltip-and-popover.ember-tooltip-target-attached-left-bottom:after, .tooltip-and-popover.ember-tooltip-target-attached-right-bottom:after { top: 15px; }
 
 /* Fade */
 
-.ember-tooltip {
-  opacity: 0; // should probably just be a tooltip thing
+.tooltip-and-popover {
+  opacity: 0;
 
+  &.ember-tooltip-target-attached-top {
+    margin-top: -10px;
+  }
+  &.ember-tooltip-target-attached-right {
+    margin-left: 10px;
+  }
+  &.ember-tooltip-target-attached-bottom {
+    margin-top: 10px;
+  }
+  &.ember-tooltip-target-attached-left {
+    margin-left: -10px;
+  }
+
+  &[aria-hidden="false"] {
+    opacity: 1;
+  }
+}
+
+.tooltip-on-element {
   &.ember-tooltip-slide,
   &.ember-tooltip-fade {
     -webkit-transition: opacity 200ms ease-out, margin 200ms ease-out;
@@ -75,14 +98,15 @@
   }
 
   &[aria-hidden="false"] {
-    opacity: 1; // should probably just be a tooltip thing
     transition-duration: 100ms; // Shorter hide duration
-
-    // POPOVER ONLY CSS
-    // pointer-events: initial;
 
     &.ember-tooltip-slide {
       margin: 0px;
     }
   }
+}
+
+.popover-on-element[aria-hidden="false"] {
+  pointer-events: initial;
+  cursor: default;
 }

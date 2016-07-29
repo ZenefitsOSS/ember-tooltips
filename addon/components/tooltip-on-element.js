@@ -1,11 +1,11 @@
 import Ember from 'ember';
-import EmberTooltipComponent from 'ember-tooltips/components/ember-tooltip';
+import TooltipAndPopoverBaseComponent from 'ember-tooltips/components/tooltip-and-popover';
 
 const { $ } = Ember;
 
-export default EmberTooltipComponent.extend({
+export default TooltipAndPopoverBaseComponent.extend({
 
-	classNames: ['ember-tooltip'],
+	classNames: ['tooltip-on-element'],
 	didInsertElement() {
     this._super(...arguments);
 
