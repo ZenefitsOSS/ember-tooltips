@@ -9,11 +9,17 @@ export default TooltipAndPopoverBaseComponent.extend({
   didInsertElement() {
     this._super(...arguments);
 
+    // shared functionality
+    this._assertTarget();
+    this.sendAction('onTooltipRender', this);
+
+    // popover functionality
     const $target = $(this.get('target'));
     const _tether = this.get('_tether');
     const $_tether = $(_tether.element);
-    // NEW
-    const delay = 250;
+    const delay = 250; // TODO(Andrew) add showDelay and a hideDelay params
+
+    // BEGIN DIFFERENT
 
     // TODO(Andrew) make these target/tether.on events dynamic
     $target.on('click', () => {
@@ -41,5 +47,9 @@ export default TooltipAndPopoverBaseComponent.extend({
         }
       }, delay);
     });
+
+    // more shared functionality
+    this._assignAria($target);
+    this._positionOffset($_tether);
   },
 });

@@ -86,21 +86,8 @@
 
 .popover-on-element[aria-hidden="false"] {
   pointer-events: initial;
-  cursor: default;
+  cursor: initial;
   -webkit-touch-callout: auto;
   -webkit-user-select: auto;
   user-select: auto;
-
-  &.ember-tooltip-target-attached-top {
-    margin-top: -10px;
-  }
-  &.ember-tooltip-target-attached-right {
-    margin-left: 10px;
-  }
-  &.ember-tooltip-target-attached-bottom {
-    margin-top: 10px;
-  }
-  &.ember-tooltip-target-attached-left {
-    margin-left: -10px;
-  }
 }

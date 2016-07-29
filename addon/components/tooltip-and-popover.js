@@ -216,6 +216,59 @@ export default EmberTetherComponent.extend({
     this.sendAction('onTooltipHide', this);
   },
 
+  // methods called during didInsertElement
+  _assertTarget() {
+    const target = this.get('target');
+
+    if (!target || target.indexOf('#') === -1) {
+      Ember.assert('You must specify a target attribute in the format target="#element-id" for the tooltip component');
+    }
+  },
+  _assignAria($target) {
+    $target.attr({
+      'aria-describedby': `#${this.get('elementId')}`,
+      tabindex: $target.attr('tabindex') || this.get('tabindex'),
+    });
+  },
+  _positionOffset($_tether) {
+    /* When this component has rendered we need
+    to check if Tether moved its position to keep the
+    element in bounds */
+
+    let renderedSide;
+
+    ['top', 'right', 'bottom', 'left'].forEach(function(side) {
+      if ($_tether.hasClass(`ember-tooltip-target-attached-${side}`)) {
+        renderedSide = side;
+      }
+    });
+
+    /* We then use the side the tooltip was *actually*
+    rendered on to set the correct offset from
+    the target element */
+
+    const spacing = this.get('spacing');
+
+    let offset;
+
+    switch(renderedSide) {
+      case 'top':
+        offset = `${spacing}px 0`;
+        break;
+      case 'right':
+        offset = `0 -${spacing}px`;
+        break;
+      case 'bottom':
+        offset = `-${spacing}px 0`;
+        break;
+      case 'left':
+        offset = `0 ${spacing}px`;
+        break;
+    }
+
+    this.set('offset', offset);
+  },
+
   /*
   Repositions the tooltip if new attributes or content are
   passed to the tooltip.
