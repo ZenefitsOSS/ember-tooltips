@@ -379,14 +379,21 @@ export default EmberTetherComponent.extend({
     }
   }),
 
-  show() {
-    // this.positionTether() fixes the issues raised in
-    // https://github.com/sir-dunxalot/ember-tooltips/issues/75
-    // this.positionTether();
-    // we need to call this private API until we upgrade to ember-tether 0.3.1
+  positionTether() {
+    // positionTether is a method in ember-tether 0.3.1
+    // the ember-tooltips library uses positionTether()
+    // this shim provides the same functionality
+    // and can be removed after we update to 0.3.1
+    // https://github.com/yapplabs/ember-tether/blob/47b47b14d92eed3439c9b2c2f15347c19e0a133d/addon/components/ember-tether.js#L52
     if (this._tether) {
       this._tether.position();
     }
+  },
+
+  show() {
+    // this.positionTether() fixes the issues raised in
+    // https://github.com/sir-dunxalot/ember-tooltips/issues/75
+    this.positionTether();
 
     if (this.get('isDestroying')) {
       return;
