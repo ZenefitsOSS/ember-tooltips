@@ -71,8 +71,12 @@ export default TooltipAndPopoverBaseComponent.extend({
         $target.on('mouseleave', () => {
           this.set('isMouseInTarget', false);
         });
+        $target.on('mouseenter', () => {
+          this.set('isMouseInTarget', true);
+        });
         $target.on('focusout', () => {
-          if (!this.get('isMouseInPopover')) {
+          // if the click is outside of the $target and the $popover then hide
+          if (!this.get('isMouseInTarget') && !this.get('isMouseInPopover')) {
             this.hide();
           }
         });
