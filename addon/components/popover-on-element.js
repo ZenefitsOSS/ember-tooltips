@@ -29,15 +29,19 @@ export default TooltipAndPopoverBaseComponent.extend({
         });
       }
 
+      let hideIfOutsideElementsAfterDelay = () => {
+        run.later(() => {
+          if (this.get('isMouseInPopover') || this.get('isMouseInTarget')) {
+            return;
+          }
+          this.hide();
+        }, this.get('hideDelay'));
+      };
+
       if (_hideOn !== 'none') {
         $target.on(_hideOn, () => {
           this.set('isMouseInTarget', false);
-          run.later(() => {
-            if (this.get('isMouseInPopover') || this.get('isMouseInTarget')) {
-              return;
-            }
-            this.hide();
-          }, this.get('hideDelay'));
+          hideIfOutsideElementsAfterDelay();
         });
       }
 
@@ -47,12 +51,7 @@ export default TooltipAndPopoverBaseComponent.extend({
 
       $_tether.on('mouseleave', () => {
         this.set('isMouseInPopover', false);
-        run.later(() => {
-          if (this.get('isMouseInPopover') || this.get('isMouseInTarget')) {
-            return;
-          }
-          this.hide();
-        }, this.get('hideDelay'));
+        hideIfOutsideElementsAfterDelay();
       });
     }
 
