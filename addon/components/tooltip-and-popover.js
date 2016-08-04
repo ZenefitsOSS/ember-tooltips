@@ -341,7 +341,7 @@ export default EmberTetherComponent.extend({
         already a tooltip visible in the DOM. Check that here
         and adjust the delay as needed. */
 
-        let visibleTooltips = Ember.$('.ember-tooltip[aria-hidden="false"]').length;
+        let visibleTooltips = Ember.$('.tooltip-on-element[aria-hidden="false"]').length;
 
         if (visibleTooltips) {
           delay = 0;
