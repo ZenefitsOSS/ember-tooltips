@@ -15,44 +15,84 @@ export default TooltipAndPopoverBaseComponent.extend({
     const event = this.get('event');
     const $target = $(this.get('target'));
     const _tether = this.get('_tether');
-    const $_tether = $(_tether.element);
+    const $popover = $(_tether.element);
 
     if (event !== 'none') {
       const _showOn = this.get('_showOn');
       const _hideOn = this.get('_hideOn');
 
-      /* add the show and hide events individually */
-      if (_showOn !== 'none') {
-        $target.on(_showOn, () => {
-          this.set('isMouseInTarget', true);
-          this.show();
-        });
-      }
-
-      let hideIfOutsideElementsAfterDelay = () => {
+      let hideIfOutsideElementsAfterDelay = (delay) => {
         run.later(() => {
           if (this.get('isMouseInPopover') || this.get('isMouseInTarget')) {
             return;
           }
           this.hide();
-        }, this.get('hideDelay'));
+        }, delay);
       };
 
-      if (_hideOn !== 'none') {
-        $target.on(_hideOn, () => {
+
+      if (_showOn === 'mouseenter') {
+        // handle the popover hover
+        $target.on(_showOn, () => {
+          this.set('isMouseInTarget', true);
+          this.show();
+        });
+
+        if (_hideOn !== 'none') {
+          $target.on(_hideOn, () => {
+            this.set('isMouseInTarget', false);
+            hideIfOutsideElementsAfterDelay(this.get('hideDelay'));
+          });
+        }
+
+        $popover.on('mouseenter', () => {
+          this.set('isMouseInPopover', true);
+        });
+
+        $popover.on('mouseleave', () => {
+          this.set('isMouseInPopover', false);
+          hideIfOutsideElementsAfterDelay(this.get('hideDelay'));
+        });
+      } else if (_showOn === 'click') {
+        // handle the popover click
+        $target.on('click', () => {
+          // this gets called when the $target and the $popover get clicked. weird right?
+          if (this.get('isMouseInPopover')) {
+            return;
+          }
+
+          this.set('isMouseInTarget', true);
+          if (this.get('tooltipIsVisible')) {
+            this.hide();
+          } else {
+            this.show();
+          }
+        });
+        $target.on('mouseleave', () => {
           this.set('isMouseInTarget', false);
-          hideIfOutsideElementsAfterDelay();
+        });
+        $target.on('focusout', () => {
+          if (!this.get('isMouseInPopover')) {
+            this.hide();
+          }
+        });
+
+        $popover.on('mouseenter', () => {
+          this.set('isMouseInPopover', true);
+        });
+        $popover.on('mouseleave', () => {
+          this.set('isMouseInPopover', false);
+        });
+      } else {
+        // TODO(Andrew) figure these out
+        $target.on(_showOn, () => {
+          this.show();
+        });
+
+        $target.on(_hideOn, () => {
+          this.hide();
         });
       }
-
-      $_tether.on('mouseenter', () => {
-        this.set('isMouseInPopover', true);
-      });
-
-      $_tether.on('mouseleave', () => {
-        this.set('isMouseInPopover', false);
-        hideIfOutsideElementsAfterDelay();
-      });
     }
 
     // TODO(Andrew) ask why this tweak was necessary (top and bottom reversed -)
