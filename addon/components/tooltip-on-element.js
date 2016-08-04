@@ -9,17 +9,9 @@ export default TooltipAndPopoverBaseComponent.extend({
 	didInsertElement() {
     this._super(...arguments);
 
-    // shared functionality
-    this._assertTarget();
-    this.sendAction('onTooltipRender', this);
-
     /* Setup event handling to hide and show the tooltip */
     const event = this.get('event');
     const $target = $(this.get('target'));
-    const _tether = this.get('_tether');
-    const $_tether = $(_tether.element);
-
-
 
     if (event !== 'none') {
       const _hideOn = this.get('_hideOn');
@@ -77,9 +69,5 @@ export default TooltipAndPopoverBaseComponent.extend({
         }
       });
     }
-
-    // more shared functionality
-    this._assignAria($target);
-    this._positionOffset($_tether);
   },
 });

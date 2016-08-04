@@ -10,10 +10,6 @@ export default TooltipAndPopoverBaseComponent.extend({
   didInsertElement() {
     this._super(...arguments);
 
-    // shared functionality
-    this._assertTarget();
-    this.sendAction('onTooltipRender', this);
-
     /* Setup event handling to hide and show the popover */
     const event = this.get('event');
     const $target = $(this.get('target'));
@@ -57,12 +53,6 @@ export default TooltipAndPopoverBaseComponent.extend({
           this.hide();
         }, this.get('hideDelay'));
       });
-
-      // TODO(Andrew) handle accessibility focusin() and focusout()
     }
-
-    // more shared functionality
-    this._assignAria($target);
-    this._positionOffset($_tether);
   },
 });
