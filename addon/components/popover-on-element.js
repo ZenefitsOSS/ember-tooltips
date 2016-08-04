@@ -63,7 +63,6 @@ export default TooltipAndPopoverBaseComponent.extend({
 
     let offset;
 
-    // TODO(Andrew) write explanatory note of why this duplication is necessary
     switch(this.get('_renderedSide')) {
       case 'top':
         offset = `-${spacing}px 0`;
