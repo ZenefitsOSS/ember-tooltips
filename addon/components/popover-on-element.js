@@ -55,6 +55,7 @@ export default TooltipAndPopoverBaseComponent.extend({
       });
     }
 
+    // TODO(Andrew) ask why this tweak was necessary (top and bottom reversed -)
     /* We then use the side the popover was *actually*
     rendered on to set the correct offset from
     the target element */
@@ -65,13 +66,13 @@ export default TooltipAndPopoverBaseComponent.extend({
 
     switch(this.get('_renderedSide')) {
       case 'top':
-        offset = `-${spacing}px 0`;
+        offset = `${spacing}px 0`;
         break;
       case 'right':
         offset = `0 ${spacing}px`;
         break;
       case 'bottom':
-        offset = `${spacing}px 0`;
+        offset = `-${spacing}px 0`;
         break;
       case 'left':
         offset = `0 -${spacing}px`;
