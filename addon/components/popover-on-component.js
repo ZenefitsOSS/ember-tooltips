@@ -5,6 +5,7 @@ const { computed } = Ember;
 
 export default PopoverOnElementComponent.extend({
 
+	// TODO(Andrew) write note of a better way to do this
   target: computed(function() {
     const parentView = this.get('parentView');
 

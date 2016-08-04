@@ -69,5 +69,30 @@ export default TooltipAndPopoverBaseComponent.extend({
         }
       });
     }
+
+    /* We then use the side the tooltip was *actually*
+    rendered on to set the correct offset from
+    the target element */
+
+    const spacing = this.get('spacing');
+
+    let offset;
+
+    switch(this.get('_renderedSide')) {
+      case 'top':
+        offset = `${spacing}px 0`;
+        break;
+      case 'right':
+        offset = `0 -${spacing}px`;
+        break;
+      case 'bottom':
+        offset = `-${spacing}px 0`;
+        break;
+      case 'left':
+        offset = `0 ${spacing}px`;
+        break;
+    }
+
+    this.set('offset', offset);
   },
 });
