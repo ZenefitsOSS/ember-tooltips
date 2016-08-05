@@ -2,9 +2,9 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import { assertHide, assertShow } from '../../helpers/sync/assert-visibility';
 import hbs from 'htmlbars-inline-precompile';
-import { POPOVER_HIDE_DELAY } from '../../helpers/constants';
 
 const { run } = Ember;
+const POPOVER_HIDE_DELAY = 250;
 
 moduleForComponent('popover-on-element', 'Integration | Option | event', {
   integration: true

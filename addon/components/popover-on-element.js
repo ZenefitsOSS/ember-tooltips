@@ -56,7 +56,7 @@ export default TooltipAndPopoverBaseComponent.extend({
       } else if (_showOn === 'click') {
         // handle the popover click
         $target.on('click', () => {
-          // this gets called when the $target and the $popover get clicked. weird right?
+          // this gets called when the $popover is clicked. weird right?
           if (this.get('isMouseInPopover')) {
             return;
           }
@@ -86,15 +86,6 @@ export default TooltipAndPopoverBaseComponent.extend({
         });
         $popover.on('mouseleave', () => {
           this.set('isMouseInPopover', false);
-        });
-      } else {
-        // TODO(Andrew) figure these out
-        $target.on(_showOn, () => {
-          this.show();
-        });
-
-        $target.on(_hideOn, () => {
-          this.hide();
         });
       }
     }
