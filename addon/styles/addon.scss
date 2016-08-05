@@ -1,5 +1,4 @@
 .tooltip-and-popover {
-  border-radius: 3px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
@@ -8,6 +7,7 @@
 
 .ember-tooltip {
   max-width: 200px;
+  border-radius: 3px;
   color: #fff;
   background: #3a3c47;
   text-shadow: -1px -1px 0 rgba(0,0,0,0.2);
@@ -27,21 +27,19 @@
   }
 }
 
-.ember-popover {
-  border: none;
-}
+/* Pointer Position */
 
-.tooltip-and-popover.tooltip-and-popover-target-attached-top:after, .tooltip-and-popover.tooltip-and-popover-target-attached-top-left:after, .tooltip-and-popover.tooltip-and-popover-target-attached-top-right:after { bottom: 0; }
-.tooltip-and-popover.tooltip-and-popover-target-attached-bottom:after, .tooltip-and-popover.tooltip-and-popover-target-attached-bottom-left:after, .tooltip-and-popover.tooltip-and-popover-target-attached-bottom-right:after { top: 0; }
-.tooltip-and-popover.tooltip-and-popover-target-attached-top:after, .tooltip-and-popover.tooltip-and-popover-target-attached-bottom:after { left: 50%; }
-.tooltip-and-popover.tooltip-and-popover-target-attached-top-left:after, .tooltip-and-popover.tooltip-and-popover-target-attached-bottom-left:after { right: 15px; }
-.tooltip-and-popover.tooltip-and-popover-target-attached-top-right:after, .tooltip-and-popover.tooltip-and-popover-target-attached-bottom-right:after { left: 15px; }
+.ember-tooltip.tooltip-and-popover-target-attached-top:after, .ember-tooltip.tooltip-and-popover-target-attached-top-left:after, .ember-tooltip.tooltip-and-popover-target-attached-top-right:after { bottom: 0; }
+.ember-tooltip.tooltip-and-popover-target-attached-bottom:after, .ember-tooltip.tooltip-and-popover-target-attached-bottom-left:after, .ember-tooltip.tooltip-and-popover-target-attached-bottom-right:after { top: 0; }
+.ember-tooltip.tooltip-and-popover-target-attached-top:after, .ember-tooltip.tooltip-and-popover-target-attached-bottom:after { left: 50%; }
+.ember-tooltip.tooltip-and-popover-target-attached-top-left:after, .ember-tooltip.tooltip-and-popover-target-attached-bottom-left:after { right: 15px; }
+.ember-tooltip.tooltip-and-popover-target-attached-top-right:after, .ember-tooltip.tooltip-and-popover-target-attached-bottom-right:after { left: 15px; }
 
-.tooltip-and-popover.tooltip-and-popover-target-attached-left:after, .tooltip-and-popover.tooltip-and-popover-target-attached-left-top:after, .tooltip-and-popover.tooltip-and-popover-target-attached-left-bottom:after { right: 0; }
-.tooltip-and-popover.tooltip-and-popover-target-attached-right:after, .tooltip-and-popover.tooltip-and-popover-target-attached-right-top:after, .tooltip-and-popover.tooltip-and-popover-target-attached-right-bottom:after { left: 0; }
-.tooltip-and-popover.tooltip-and-popover-target-attached-left:after, .tooltip-and-popover.tooltip-and-popover-target-attached-right:after { top: 50%; }
-.tooltip-and-popover.tooltip-and-popover-target-attached-left-top:after, .tooltip-and-popover.tooltip-and-popover-target-attached-right-top:after { bottom: 15px; }
-.tooltip-and-popover.tooltip-and-popover-target-attached-left-bottom:after, .tooltip-and-popover.tooltip-and-popover-target-attached-right-bottom:after { top: 15px; }
+.ember-tooltip.tooltip-and-popover-target-attached-left:after, .ember-tooltip.tooltip-and-popover-target-attached-left-top:after, .ember-tooltip.tooltip-and-popover-target-attached-left-bottom:after { right: 0; }
+.ember-tooltip.tooltip-and-popover-target-attached-right:after, .ember-tooltip.tooltip-and-popover-target-attached-right-top:after, .ember-tooltip.tooltip-and-popover-target-attached-right-bottom:after { left: 0; }
+.ember-tooltip.tooltip-and-popover-target-attached-left:after, .ember-tooltip.tooltip-and-popover-target-attached-right:after { top: 50%; }
+.ember-tooltip.tooltip-and-popover-target-attached-left-top:after, .ember-tooltip.tooltip-and-popover-target-attached-right-top:after { bottom: 15px; }
+.ember-tooltip.tooltip-and-popover-target-attached-left-bottom:after, .ember-tooltip.tooltip-and-popover-target-attached-right-bottom:after { top: 15px; }
 
 /* Fade */
 
