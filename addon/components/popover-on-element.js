@@ -7,7 +7,7 @@ export default TooltipAndPopoverBaseComponent.extend({
   hideDelay: 250,
   spacing: 0,
 
-  classNames: ['popover-on-element'],
+  classNames: ['ember-popover'],
   didInsertElement() {
     this._super(...arguments);
 

@@ -5,7 +5,7 @@ const { $ } = Ember;
 
 export default TooltipAndPopoverBaseComponent.extend({
 
-	classNames: ['tooltip-on-element'],
+	classNames: ['ember-tooltip'],
 	didInsertElement() {
     this._super(...arguments);
 

@@ -6,7 +6,7 @@
   pointer-events: none;
 }
 
-.tooltip-on-element {
+.ember-tooltip {
   max-width: 200px;
   color: #fff;
   background: #3a3c47;
@@ -27,7 +27,7 @@
   }
 }
 
-.popover-on-element {
+.ember-popover {
   border: none;
 }
 
@@ -53,7 +53,7 @@
   }
 }
 
-.tooltip-on-element {
+.tooltip-and-popover {
   &.tooltip-and-popover-slide,
   &.tooltip-and-popover-fade {
     -webkit-transition: opacity 200ms ease-out, margin 200ms ease-out;
@@ -87,7 +87,7 @@
   }
 }
 
-.popover-on-element[aria-hidden="false"] {
+.ember-popover[aria-hidden="false"] {
   pointer-events: initial;
   cursor: initial;
   -webkit-touch-callout: auto;
