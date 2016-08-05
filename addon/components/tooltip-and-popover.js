@@ -117,22 +117,6 @@ export default EmberTetherComponent.extend({
     return constraints;
   }),
 
-  _renderedSide: computed(function() {
-    const _tether = this.get('_tether');
-    const $_tether = $(_tether.element);
-
-    let renderedSide;
-
-    ['top', 'right', 'bottom', 'left'].some((side) => {
-      if ($_tether.hasClass(`tooltip-and-popover-target-attached-${side}`)) {
-        renderedSide = side;
-        return true;
-      }
-    });
-
-    return renderedSide;
-  }),
-
   effectClass: computed(function() {
     return `tooltip-and-popover-${this.get('effect')}`;
   }),
@@ -254,6 +238,41 @@ export default EmberTetherComponent.extend({
 
     /* offset handled in the tooltip and
     popover didInsertElement hooks */
+
+    /* We then use the side the tooltip was *actually*
+    rendered on to set the correct offset from
+    the target element */
+
+    const _tether = this.get('_tether');
+    const $_tether = $(_tether.element);
+    let renderedSide;
+
+    ['top', 'right', 'bottom', 'left'].forEach((side) => {
+      if ($_tether.hasClass(`tooltip-and-popover-target-attached-${side}`)) {
+        renderedSide = side;
+        return true;
+      }
+    });
+
+    const spacing = this.get('spacing');
+    let offset;
+
+    switch(renderedSide) {
+      case 'top':
+        offset = `${spacing}px 0`;
+        break;
+      case 'right':
+        offset = `0 ${spacing}px`;
+        break;
+      case 'bottom':
+        offset = `-${spacing}px 0`;
+        break;
+      case 'left':
+        offset = `0 -${spacing}px`;
+        break;
+    }
+
+    this.set('offset', offset);
   },
 
   /*
