@@ -1,10 +1,3 @@
-/*
-  TODO
-    Alias certain names: tooltipIsVisible
-    use const/let (depending on what is done around me)
-
-*/
-
 import Ember from 'ember';
 import EmberTetherComponent from 'ember-tether/components/ember-tether';
 

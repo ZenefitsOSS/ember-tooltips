@@ -47,8 +47,8 @@
 
   &.tooltip-and-popover-slide,
   &.tooltip-and-popover-fade {
-    // -webkit-transition: opacity 200ms ease-out, margin 200ms ease-out;
-    // transition: opacity 200ms ease-out, margin 200ms ease-out;
+    -webkit-transition: opacity 200ms ease-out, margin 200ms ease-out;
+    transition: opacity 200ms ease-out, margin 200ms ease-out;
   }
 
   &.tooltip-and-popover-slide {
@@ -71,7 +71,7 @@
 
   &[aria-hidden="false"] {
     opacity: 1;
-    // transition-duration: 100ms; // Shorter hide duration // TODO(Andrew) revert this
+    transition-duration: 100ms; // Shorter hide duration
 
     &.tooltip-and-popover-slide {
       margin: 0px;
@@ -86,5 +86,3 @@
   -webkit-user-select: auto;
   user-select: auto;
 }
-
-// TODO add test to make sure tooltip is clickable and that it won't closed when clicked

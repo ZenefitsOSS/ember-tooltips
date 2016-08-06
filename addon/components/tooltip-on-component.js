@@ -3,7 +3,7 @@ import TooltipOnElementComponent from 'ember-tooltips/components/tooltip-on-elem
 
 const { computed } = Ember;
 
-export const targetComputed = computed(function() {
+export const targetComputedFunction = computed(function() {
   const parentView = this.get('parentView');
 
   if (!parentView) {
@@ -17,6 +17,6 @@ export const targetComputed = computed(function() {
 
 export default TooltipOnElementComponent.extend({
 
-  target: targetComputed,
+  target: targetComputedFunction,
 
 });

@@ -8,8 +8,9 @@ export default TooltipAndPopoverComponent.extend({
   hideDelay: '250',
 
   classNames: ['ember-popover'],
-  isMouseInside: false,
-  isMouseOutside: Ember.computed.not('isMouseInside'),
+  _isMouseInside: false,
+  _isMouseOutside: Ember.computed.not('_isMouseInside'),
+  _isMouseInsidePopover: false, /* see note below why this is necessary */
   didInsertElement() {
     this._super(...arguments);
 
@@ -21,30 +22,30 @@ export default TooltipAndPopoverComponent.extend({
       return;
     }
 
-    let hideAfterDelayIfIsMouseOutside = () => {
+    const hideAfterDelayIfMouseIsOutside = () => {
       run.later(() => {
-        if (this.get('isMouseOutside')) {
+        if (this.get('_isMouseOutside')) {
           this.hide();
         }
       }, +this.get('hideDelay'));
     };
 
-    // record isMouseInside events
+    /* record _isMouseInside events */
     $target.on('mouseenter', () => {
-      this.set('isMouseInside', true);
+      this.set('_isMouseInside', true);
     });
     $popover.on('mouseenter', () => {
-      this.set('isMouseInsidePopover', true);
-      this.set('isMouseInside', true);
+      this.set('_isMouseInsidePopover', true);
+      this.set('_isMouseInside', true);
     });
 
-    // record !isMouseInside events
+    /* record !_isMouseInside events */
     $target.on('mouseleave', () => {
-      this.set('isMouseInside', false);
+      this.set('_isMouseInside', false);
     });
     $popover.on('mouseleave', () => {
-      this.set('isMouseInsidePopover', false);
-      this.set('isMouseInside', false);
+      this.set('_isMouseInsidePopover', false);
+      this.set('_isMouseInside', false);
     });
 
     const _showOn = this.get('_showOn');
@@ -55,17 +56,17 @@ export default TooltipAndPopoverComponent.extend({
 
       $target.on(_showOn, () => this.show());
 
-      $target.on(_hideOn, () => hideAfterDelayIfIsMouseOutside());
+      $target.on(_hideOn, () => hideAfterDelayIfMouseIsOutside());
 
-      $popover.on(_hideOn, () => hideAfterDelayIfIsMouseOutside());
+      $popover.on(_hideOn, () => hideAfterDelayIfMouseIsOutside());
 
     } else if (_showOn === 'click') {
       /* handle the popover click */
 
       $target.on(_showOn, () => {
-        // $target.on('click'... ) gets called when the $popover is clicked
-        // we need isMouseInsidePopover to reject this event
-        if (this.get('isMouseInsidePopover')) {
+        /* $target.on('click'... ) gets called when the $popover is clicked
+        we need _isMouseInsidePopover to reject this event */
+        if (this.get('_isMouseInsidePopover')) {
           return;
         }
 
@@ -77,7 +78,7 @@ export default TooltipAndPopoverComponent.extend({
       });
 
       $target.on('focusout', () => {
-        if (this.get('isMouseOutside')) {
+        if (this.get('_isMouseOutside')) {
           this.hide();
         }
       });

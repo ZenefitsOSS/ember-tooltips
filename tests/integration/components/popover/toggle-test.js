@@ -13,7 +13,7 @@ test('Popover toggles with hover', function(assert) {
 
   const done = assert.async();
 
-  // assert.expect(3);
+  assert.expect(3);
 
   this.render(hbs`{{popover-on-component}}`);
 
@@ -37,7 +37,7 @@ test('Popover toggles with hover', function(assert) {
 
 test('Popover toggles with click', function(assert) {
 
-  // assert.expect(3);
+  assert.expect(3);
 
   this.render(hbs`{{popover-on-component event='click'}}`);
 
@@ -59,7 +59,7 @@ test('Popover toggles with click', function(assert) {
 
 test('Popover does not show with none', function(assert) {
 
-  // assert.expect(4);
+  assert.expect(4);
 
   this.render(hbs`{{popover-on-component event='none'}}`);
 

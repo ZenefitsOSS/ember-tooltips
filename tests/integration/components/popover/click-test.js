@@ -11,7 +11,7 @@ moduleForComponent('popover-on-element', 'Integration | Option | event', {
 
 test('Popover with click toggle', function(assert) {
 
-  // assert.expect(3);
+  assert.expect(3);
 
   this.render(hbs`{{popover-on-element event="click"}}`);
 
@@ -35,7 +35,7 @@ test('Popover with click toggle', function(assert) {
 
 test('Popover with click on popover and focusout', function(assert) {
 
-  // assert.expect(3);
+  assert.expect(4);
 
   this.render(hbs`
     {{popover-on-element event="click"}}
@@ -60,7 +60,7 @@ test('Popover with click on popover and focusout', function(assert) {
   assertShow(assert, this);
 
   run(() => {
-    // mouseleave the popover and focusout
+    /* mouseleave the popover and focusout */
     $popover.trigger('mouseleave');
     $popover.trigger('focusout');
   });

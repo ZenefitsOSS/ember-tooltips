@@ -60,7 +60,7 @@ test('Popover with hover shown with interaction', function(assert) {
 
   const done = assert.async();
 
-  // assert.expect(3);
+  assert.expect(7);
 
   this.render(hbs`{{popover-on-element}}`);
 
