@@ -38,7 +38,7 @@ export default TooltipAndPopoverComponent.extend({
       this.set('isMouseInside', true);
     });
 
-    // record isMouseOutside events
+    // record !isMouseInside events
     $target.on('mouseleave', () => {
       this.set('isMouseInside', false);
     });

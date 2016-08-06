@@ -3,7 +3,7 @@ export function assertShow(assert, context) {
   assert.equal(context.$().find('.tooltip-and-popover').attr('aria-hidden'), 'false',
     'Should show tooltip or popover');
   assert.equal(context.$().find('.tooltip-and-popover').css('opacity'), '1',
-    'Should hide tooltip or popover (opacity == 1)'); // TODO(Andrew) remove this, rely on aria
+    'Should show tooltip or popover (opacity == 1)'); // TODO(Andrew) remove this, rely on aria
 
 }
 

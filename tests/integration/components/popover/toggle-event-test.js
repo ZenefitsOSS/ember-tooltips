@@ -11,6 +11,8 @@ moduleForComponent('popover-on-element', 'Integration | Option | event', {
 
 test('Popover toggles with hover', function(assert) {
 
+  const done = assert.async();
+
   // assert.expect(3);
 
   this.render(hbs`{{popover-on-element}}`);
@@ -27,8 +29,10 @@ test('Popover toggles with hover', function(assert) {
     this.$().trigger('mouseleave');
   });
 
-  assertHide(assert, this);
-
+  run.later(() => {
+    assertHide(assert, this);
+    done();
+  }, 350);
 });
 
 test('Popover toggles with click', function(assert) {
@@ -47,28 +51,6 @@ test('Popover toggles with click', function(assert) {
 
   run(this, () => {
     this.$().click();
-  });
-
-  assertHide(assert, this);
-
-});
-
-test('Popover toggles with focus', function(assert) {
-
-  // assert.expect(3);
-
-  this.render(hbs`{{popover-on-element event='focus'}}`);
-
-  assertHide(assert, this);
-
-  run(() => {
-    this.$().trigger('focus');
-  });
-
-  assertShow(assert, this);
-
-  run(this, () => {
-    this.$().trigger('blur');
   });
 
   assertHide(assert, this);
