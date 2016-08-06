@@ -69,7 +69,6 @@ export default EmberTetherComponent.extend({
   classNameBindings: ['effectClass'],
   classPrefix: 'ember-tooltip',
   classNames: ['ember-tooltip'],
-
   _hideTimer: null,
   _showTimer: null,
 
