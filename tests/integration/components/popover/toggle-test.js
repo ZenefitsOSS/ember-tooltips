@@ -61,7 +61,7 @@ test('Popover does not show with none', function(assert) {
 
   // assert.expect(4);
 
-  this.render(hbs`{{tooltip-on-component event='none'}}`);
+  this.render(hbs`{{popover-on-element event='none'}}`);
 
   assertHide(assert, this);
 

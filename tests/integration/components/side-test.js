@@ -1,10 +1,10 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-function assertPosition(assert, context, expectedSide) {
+export let assertPosition = function(assert, context, expectedSide, selector=".ember-tooltip") {
   const $this = context.$();
   const targetPosition = $this.position();
-  const tooltipPosition = $this.find('.ember-tooltip').position();
+  const tooltipPosition = $this.find(selector).position();
 
   if (expectedSide === 'top') {
     assert.ok(targetPosition.top > tooltipPosition.top,
@@ -19,7 +19,7 @@ function assertPosition(assert, context, expectedSide) {
     assert.ok(targetPosition.left > tooltipPosition.left,
       'Tooltip should be left of the target');
   }
-}
+};
 
 moduleForComponent('tooltip-on-component', 'Integration | Option | side and keepInWindow', {
   integration: true

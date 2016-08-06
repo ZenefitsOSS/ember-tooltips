@@ -21,7 +21,7 @@ export default TooltipAndPopoverComponent.extend({
       return;
     }
 
-    let hideAfterDelayIfMouseIsOutside = () => {
+    let hideAfterDelayIfIsMouseOutside = () => {
       run.later(() => {
         if (this.get('isMouseOutside')) {
           this.hide();
@@ -55,9 +55,9 @@ export default TooltipAndPopoverComponent.extend({
 
       $target.on(_showOn, () => this.show());
 
-      $target.on(_hideOn, () => hideAfterDelayIfMouseIsOutside());
+      $target.on(_hideOn, () => hideAfterDelayIfIsMouseOutside());
 
-      $popover.on(_hideOn, () => hideAfterDelayIfMouseIsOutside());
+      $popover.on(_hideOn, () => hideAfterDelayIfIsMouseOutside());
 
     } else if (_showOn === 'click') {
       /* handle the popover click */
