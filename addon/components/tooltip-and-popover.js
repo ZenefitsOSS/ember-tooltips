@@ -68,7 +68,7 @@ export default EmberTetherComponent.extend({
   attributeBindings: ['aria-hidden', 'role', 'tabindex'],
   classNameBindings: ['effectClass'],
   classPrefix: 'ember-tooltip',
-  classNames: ['ember-tooltip'],
+  classNames: ['tooltip-and-popover'],
   _hideTimer: null,
   _showTimer: null,
 

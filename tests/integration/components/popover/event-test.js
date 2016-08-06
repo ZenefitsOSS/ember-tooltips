@@ -11,7 +11,7 @@ moduleForComponent('popover-on-element', 'Integration | Option | event', {
 
 test('Popover toggles with hover', function(assert) {
 
-  assert.expect(3);
+  // assert.expect(3);
 
   this.render(hbs`{{popover-on-element}}`);
 
@@ -33,7 +33,7 @@ test('Popover toggles with hover', function(assert) {
 
 test('Popover toggles with click', function(assert) {
 
-  assert.expect(3);
+  // assert.expect(3);
 
   this.render(hbs`{{popover-on-element event='click'}}`);
 
@@ -55,7 +55,7 @@ test('Popover toggles with click', function(assert) {
 
 test('Popover toggles with focus', function(assert) {
 
-  assert.expect(3);
+  // assert.expect(3);
 
   this.render(hbs`{{popover-on-element event='focus'}}`);
 
@@ -77,7 +77,7 @@ test('Popover toggles with focus', function(assert) {
 
 test('Popover does not show with none', function(assert) {
 
-  assert.expect(4);
+  // assert.expect(4);
 
   this.render(hbs`{{tooltip-on-component event='none'}}`);
 
