@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 
 const { run } = Ember;
 
-moduleForComponent('popover-on-element', 'Integration | Option | event', {
+moduleForComponent('popover-on-component', 'Integration | Option | event', {
   integration: true
 });
 
@@ -15,7 +15,7 @@ test('Popover toggles with hover', function(assert) {
 
   // assert.expect(3);
 
-  this.render(hbs`{{popover-on-element}}`);
+  this.render(hbs`{{popover-on-component}}`);
 
   assertHide(assert, this);
 
@@ -39,7 +39,7 @@ test('Popover toggles with click', function(assert) {
 
   // assert.expect(3);
 
-  this.render(hbs`{{popover-on-element event='click'}}`);
+  this.render(hbs`{{popover-on-component event='click'}}`);
 
   assertHide(assert, this);
 
@@ -61,7 +61,7 @@ test('Popover does not show with none', function(assert) {
 
   // assert.expect(4);
 
-  this.render(hbs`{{popover-on-element event='none'}}`);
+  this.render(hbs`{{popover-on-component event='none'}}`);
 
   assertHide(assert, this);
 
