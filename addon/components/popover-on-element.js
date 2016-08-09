@@ -70,7 +70,7 @@ export default TooltipAndPopoverComponent.extend({
           return;
         }
 
-        if (this.get('tooltipIsVisible')) {
+        if (this.get('isVisible')) {
           this.hide();
         } else {
           this.show();
