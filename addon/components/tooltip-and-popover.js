@@ -40,7 +40,7 @@ export default EmberTetherComponent.extend({
   showOn: null,
   spacing: 10,
   tabindex: '0', // A positive integer (to enable) or -1 (to disable)
-  tooltipIsVisible: false,
+  isVisible: false,
   keepInWindow: true,
 
   /*
@@ -64,7 +64,7 @@ export default EmberTetherComponent.extend({
 
   /* Properties */
 
-  'aria-hidden': computed.not('tooltipIsVisible'),
+  'aria-hidden': computed.not('isVisible'),
   attributeBindings: ['aria-hidden', 'role', 'tabindex'],
   classNameBindings: ['effectClass'],
   classPrefix: 'tooltip-and-popover',
@@ -213,7 +213,7 @@ export default EmberTetherComponent.extend({
 
     run.cancel(this.get('_showTimer'));
 
-    this.set('tooltipIsVisible', false);
+    this.set('isVisible', false);
     this.sendAction('onTooltipHide', this);
   },
 
@@ -293,16 +293,16 @@ export default EmberTetherComponent.extend({
   },
 
   /*
-  We use an observer so the user can set tooltipIsVisible
+  We use an observer so the user can set isVisible
   as a attribute.
 
   @method setTimer
   */
 
-  setTimer: Ember.observer('tooltipIsVisible', function() {
-    const tooltipIsVisible = this.get('tooltipIsVisible');
+  setTimer: Ember.observer('isVisible', function() {
+    const isVisible = this.get('isVisible');
 
-    if (tooltipIsVisible) {
+    if (isVisible) {
       const duration = cleanNumber(this.get('duration'));
 
       run.cancel(this.get('_hideTimer'));
@@ -362,14 +362,14 @@ export default EmberTetherComponent.extend({
         }
       }
 
-      const _showTimer = run.later(this, this.set, 'tooltipIsVisible', true, delay);
+      const _showTimer = run.later(this, this.set, 'isVisible', true, delay);
 
       this.set('_showTimer', _showTimer);
     } else {
 
       /* If there is no delay, show the tooltop immediately */
 
-      this.set('tooltipIsVisible', true);
+      this.set('isVisible', true);
     }
 
     this.sendAction('onTooltipShow', this);
@@ -381,7 +381,7 @@ export default EmberTetherComponent.extend({
     logic for showing and hiding in the show() and hide()
     methods. */
 
-    if (this.get('tooltipIsVisible')) {
+    if (this.get('isVisible')) {
       this.hide();
     } else {
       this.show();

@@ -102,7 +102,7 @@ Options are set as attributes on the tooltip components. Current tooltip propert
 - [side](#side)
 - [showOn](#show-on)
 - [spacing](#spacing)
-- [tooltipIsVisible](#tooltip-is-visible)
+- [isVisible](#is-visible)
 
 #### Class
 
@@ -202,7 +202,7 @@ The event that the tooltip will hide and show for. Possible options are:
 
 This event is overwritten by the individual [`hideOn`](#hide-on) and [`showOn`](#show-on) properties. In effect, setting `event` sets `hideOn` and `shownOn` for you.
 
-The tooltip can also be shown programatically by passing in the `tooltipIsVisible` property, [documented here](#tooltip-is-visible).
+The tooltip can also be shown programatically by passing in the `isVisible` property, [documented here](#is-visible).
 
 #### Hide on
 
@@ -313,7 +313,7 @@ This can be useful alongside `event='none'` when you only want to toolip to show
 
 ```hbs
 {{!--Binds the tooltip visibility to the showTooltip property--}}
-{{tooltip-on-component tooltipIsVisible=showTooltip}}
+{{tooltip-on-component isVisible=showTooltip}}
 ```
 
 ### Setting Defaults
