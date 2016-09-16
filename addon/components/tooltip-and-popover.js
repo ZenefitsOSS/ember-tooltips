@@ -367,7 +367,7 @@ export default EmberTetherComponent.extend({
       }
 
       const _showTimer = run.later(this, () => {
-        if (!this.get('destroying')) {
+        if (!this.get('destroying') || !this.get('isDestroyed')) {
           this.set('isShown', true);
         }
       }, delay);
