@@ -1,9 +1,9 @@
 export function assertShow(assert, context) {
 
-	const $tooltip = context.$().find('.ember-tooltip');
+  const $tooltip = context.$().find('.ember-tooltip');
   assert.equal($tooltip.attr('aria-hidden'), 'false', 'Should show tooltip');
   assert.equal($tooltip.attr('is-tether-enabled'), 'true',
-  	'tether should be enabled if tooltip is visible');
+    'tether should be enabled if tooltip is visible');
 
 }
 
