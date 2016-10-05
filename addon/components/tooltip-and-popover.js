@@ -281,10 +281,10 @@ export default EmberTetherComponent.extend({
 
     this.set('offset', offset);
 
-    if (!this.get('isShown')) {
-      this.stopTether();
-    } else {
+    if (this.get('isShown')) {
       this.startTether();
+    } else {
+      this.stopTether();
     }
   },
 
