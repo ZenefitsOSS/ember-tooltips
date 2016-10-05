@@ -13,16 +13,16 @@ test('It toggles with isShown', function(assert) {
 
   assert.expect(4);
 
-  this.set('showTooltip', false);
+  this.set('showTooltip', true);
 
   this.render(hbs`{{tooltip-on-component isShown=showTooltip}}`);
 
-  assertHide(assert, this);
+  assertShow(assert, this);
 
   run(() => {
-    this.set('showTooltip', true);
+    this.set('showTooltip', false);
   });
 
-  assertShow(assert, this);
+  assertHide(assert, this);
 
 });

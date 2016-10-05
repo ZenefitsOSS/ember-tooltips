@@ -281,7 +281,9 @@ export default EmberTetherComponent.extend({
 
     this.set('offset', offset);
 
-    if (event !== 'none' || !this.get('isShown')) {
+    if (this.get('isShown')) {
+      this.startTether();
+    } else {
       this.stopTether();
     }
   },
@@ -396,13 +398,13 @@ export default EmberTetherComponent.extend({
   stopTether() {
     run.schedule('afterRender', () => {
       this.get('_tether').disable();
-      this.set('is-tether-enabled', 'false');
+      this.set('is-tether-enabled', 'false'); // used for integration tests
     });
   },
 
   startTether() {
     this.get('_tether').enable();
-    this.set('is-tether-enabled', 'true');
+    this.set('is-tether-enabled', 'true'); // used for integration tests
   },
 
   // cannot use computed.alias('_tether.enabled') for some reason
