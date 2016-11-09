@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 
 const { run } = Ember;
 
-moduleForComponent('tooltip-on-component', 'Integration | Option | delay', {
+moduleForComponent('tooltip-on-element', 'Integration | Option | delay', {
   integration: true
 });
 
@@ -14,7 +14,7 @@ test('It animates with delay passed as a number', function(assert) {
 
   assert.expect(8);
 
-  this.render(hbs`{{tooltip-on-component delay=300}}`);
+  this.render(hbs`{{tooltip-on-element delay=300}}`);
 
   assertHide(assert, this);
 
@@ -25,6 +25,8 @@ test('It animates with delay passed as a number', function(assert) {
   /* Check the tooltip is shown after the correct delay */
 
   run.later(() => {
+    // tether should be enabled, because the tooltip must be positioned
+    // before it is shown
     assertHide(assert, this);
   }, 290);
 
@@ -51,7 +53,7 @@ test('It animates with delay passed as a string', function(assert) {
 
   assert.expect(8);
 
-  this.render(hbs`{{tooltip-on-component delay='300'}}`);
+  this.render(hbs`{{tooltip-on-element delay='300'}}`);
 
   assertHide(assert, this);
 
@@ -59,9 +61,11 @@ test('It animates with delay passed as a string', function(assert) {
     this.$().trigger('mouseover');
   });
 
-  /* Check the tooltip is shwon after the correct delay */
+  /* Check the tooltip is shown after the correct delay */
 
   run.later(() => {
+    // tether should be enabled, because the tooltip must be positioned
+    // before it is shown
     assertHide(assert, this);
   }, 290);
 
