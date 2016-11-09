@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import EmberTetherComponent from 'ember-tether/components/ember-tether';
 
-const { $, computed, run } = Ember;
+const { $, computed, run, on } = Ember;
 
 const defaultPosition = 'center';
 
@@ -27,6 +27,16 @@ function cleanNumber(stringOrNumber) {
 
 export default EmberTetherComponent.extend({
 
+  passedPropertiesObject: null,
+  setPropertiesWithPassedPropertiesObject: on('didReceiveAttrs', function() {
+    this._super(...arguments);
+
+    let passedPropertiesObject = this.get('passedPropertiesObject');
+    if (passedPropertiesObject) {
+      this.setProperties(passedPropertiesObject);
+    }
+  }),
+
   /* Options */
 
   delay: 0,
@@ -41,6 +51,10 @@ export default EmberTetherComponent.extend({
   spacing: 10,
   tabindex: '0', // A positive integer (to enable) or -1 (to disable)
   isShown: false,
+  tooltipIsVisible: computed.deprecatingAlias('isShown', {
+    id: 'tooltip-and-popover.tooltipIsVisible',
+    until: '3.0.0',
+  }),
   keepInWindow: true,
 
   /*
@@ -62,18 +76,39 @@ export default EmberTetherComponent.extend({
   onRender: null,
   onShow: null,
 
+  onTooltipDestroy: computed.deprecatingAlias('onDestroy', {
+    id: 'tooltip-and-popover.onTooltipDestroy',
+    until: '3.0.0',
+  }),
+  onTooltipHide: computed.deprecatingAlias('onHide', {
+    id: 'tooltip-and-popover.onTooltipHide',
+    until: '3.0.0',
+  }),
+  onTooltipRender: computed.deprecatingAlias('onRender', {
+    id: 'tooltip-and-popover.onTooltipRender',
+    until: '3.0.0',
+  }),
+  onTooltipShow: computed.deprecatingAlias('onShow', {
+    id: 'tooltip-and-popover.onTooltipShow',
+    until: '3.0.0',
+  }),
+
   /* Properties */
 
-  attributeBindings: ['aria-hidden', 'role', 'tabindex', 'is-tether-enabled'],
+  attributeBindings: ['aria-hidden', 'role', 'tabindex', 'data-tether-enabled'],
   classNameBindings: ['effectClass'],
   classPrefix: 'ember-tooltip-or-popover',
-  classNames: ['ember-tooltip-or-popover'],
 
   _didUpdateTimeoutLength: 1000, // 1000 ms or 0 ms, depending whether in test mode
   _hideTimer: null,
   _showTimer: null,
+  _isTetherEnabled: true,
 
   /* CPs */
+
+  'data-tether-enabled': computed('_isTetherEnabled', function() {
+    return this.get('_isTetherEnabled') ? 'true' : 'false';
+  }),
 
   'aria-hidden': computed('isShown', function() {
     return this.get('isShown') ? 'false' : 'true';
@@ -281,9 +316,7 @@ export default EmberTetherComponent.extend({
 
     this.set('offset', offset);
 
-    if (this.get('isShown')) {
-      this.startTether();
-    } else {
+    if (!this.get('isShown')) {
       this.stopTether();
     }
   },
@@ -370,7 +403,7 @@ export default EmberTetherComponent.extend({
         already a tooltip/popover shown in the DOM. Check that here
         and adjust the delay as needed. */
 
-        let shownTooltipsOrPopovers = Ember.$(`.${this.get('classPrefix')}[aria-hidden="false"]`).length;
+        let shownTooltipsOrPopovers = Ember.$(`.${this.get('classPrefix')}-element[aria-hidden="false"]`).length;
 
         if (shownTooltipsOrPopovers) {
           delay = 0;
@@ -378,37 +411,23 @@ export default EmberTetherComponent.extend({
       }
 
       const _showTimer = run.later(this, () => {
-        if (!this.get('destroying') || !this.get('isDestroyed')) {
+        if (!this.get('destroying') && !this.get('isDestroyed')) {
+          this.startTether();
           this.set('isShown', true);
         }
-        this.startTether();
       }, delay);
 
       this.set('_showTimer', _showTimer);
     } else {
 
       /* If there is no delay, show the tooltop immediately */
+
       this.startTether();
       this.set('isShown', true);
     }
 
     this.sendAction('onShow', this);
   },
-
-  stopTether() {
-    run.schedule('afterRender', () => {
-      this.get('_tether').disable();
-      this.set('is-tether-enabled', 'false'); // used for integration tests
-    });
-  },
-
-  startTether() {
-    this.get('_tether').enable();
-    this.set('is-tether-enabled', 'true'); // used for integration tests
-  },
-
-  // cannot use computed.alias('_tether.enabled') for some reason
-  'is-tether-enabled': 'false',
 
   toggle() {
 
@@ -436,5 +455,21 @@ export default EmberTetherComponent.extend({
 
     this.sendAction('onDestroy', this);
   },
+
+  startTether() {
+    // can't depend on `_tether.enabled` because it's not an
+    // Ember property (so won't trigger cp update when changed)
+    this.set('_isTetherEnabled', true);
+    this.get('_tether').enable();
+  },
+
+  stopTether() {
+    run.schedule('afterRender', () => {
+      // can't depend on `_tether.enabled` because it's not an
+      // Ember property (so won't trigger cp update when changed)
+      this.set('_isTetherEnabled', false);
+      this.get('_tether').disable();
+    });
+  }
 
 });

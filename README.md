@@ -1,7 +1,7 @@
-Ember-tooltips [![Build Status](https://travis-ci.org/sir-dunxalot/ember-tooltips.svg)](https://travis-ci.org/sir-dunxalot/ember-tooltips) [![npm](https://img.shields.io/npm/v/ember-tooltips.svg)](https://www.npmjs.com/package/ember-tooltips)
+Ember-tooltips (and popovers) [![Build Status](https://travis-ci.org/sir-dunxalot/ember-tooltips.svg)](https://travis-ci.org/sir-dunxalot/ember-tooltips) [![npm](https://img.shields.io/npm/v/ember-tooltips.svg)](https://www.npmjs.com/package/ember-tooltips)
 ======
 
-Render tooltips on components and other HTML elements using HTMLBars.
+Render tooltips and popovers on components and other HTML elements using HTMLBars.
 
 ## Installation
 
@@ -15,9 +15,12 @@ Documentation for usage is below:
 
 - [Demo](http://sir-dunxalot.github.io/ember-tooltips/)
 - [1.0.0 Release](#100-release)
+- [2.4.0 Release](#240-release)
 - [Usage](#usage)
   - [tooltip-on-component](#tooltip-on-component)
   - [tooltip-on-element](#tooltip-on-element)
+  - [popover-on-component](#popover-on-element)
+  - [popover-on-element](#popover-on-element)
 - [Options](#options)
   - [Setting defaults](#setting-defaults)
 - [Actions](#actions)
@@ -28,6 +31,10 @@ Documentation for usage is below:
 Version 1.0.0 removed <a href="http://darsa.in/tooltip/" target="_blank">darsain/tooltip</a> as a dependency, in favor of using custom Ember code.
 
 You can use and see the pre-1.0 version on [this branch](https://github.com/sir-dunxalot/ember-tooltips/tree/pre-1.0). Alternatively, install `"ember-tooltips": "0.7.0"` in your `package.json`.
+
+## 2.4.0 Release
+
+Version 2.4.0 introduces lazy rendering. Tooltips and popovers generally don't need to be rendered until the user has interacted with the `$target` element. Adding `enableLazyRendering=true` to your component will enable this feature. In version 3.0.0 `enableLazyRendering` will default to `true` and you'll be able to opt-out of lazy rendering as necessary.
 
 ## Usage
 
@@ -87,9 +94,23 @@ You can also specify the ID of the element to attach the tooltip to:
 
 The `target` property must be an ID, including the `#`.
 
+### Popover on Element
+
+Popovers can be created with `{{popover-on-element}}` and `{{popover-on-component}}` with the same `target` behavior as tooltips.
+
+The same options passed to tooltip components can be passed to popover components. In addition, a [hideDelay](#hide-delay) option is made available for popovers only.
+
+Popovers also benefit from a `hide` API made publically acessible:
+
+```
+{{#popover-on-element as |popover|}}
+  Click <a href {{action popover.hide}}>here</a> to hide the popover
+{{/popover-on-element}}
+```
+
 ## Options
 
-Options are set as attributes on the tooltip components. Current tooltip properties this addon supports are:
+Options are set as attributes on the tooltip/popover components. Current tooltip/popover properties this addon supports are:
 
 - [class](#class)
 - [delay](#delay)
@@ -103,6 +124,8 @@ Options are set as attributes on the tooltip components. Current tooltip propert
 - [showOn](#show-on)
 - [spacing](#spacing)
 - [isShown](#is-shown)
+- [hideDelay (popover only)](#hide-delay)
+- [enableLazyRendering](#enable-lazy-rendering)
 
 #### Class
 
@@ -301,7 +324,7 @@ Sets the number of pixels the tooltip will render from the target element. A hig
 {{tooltip-on-component spacing=20}}
 ```
 
-#### Tooltip is shown
+#### Is Shown
 
 | Type    | Boolean |
 |---------|---------|
@@ -316,6 +339,28 @@ This can be useful alongside `event='none'` when you only want to toolip to show
 {{tooltip-on-component isShown=showTooltip}}
 ```
 
+#### Hide delay
+
+| Type    | Number |
+|---------|---------|
+| Default | 250   |
+
+**POPOVER ONLY:** The number of milliseconds before the popover will hide after the user hovers away from the popover and the popover target. This is only applicable when `event='hover'`.
+
+```hbs
+{{popover-on-component event="hover" hideDelay=300}}
+```
+
+![popover-hover](https://cloud.githubusercontent.com/assets/7050871/18113238/e010ee64-6ee2-11e6-9ff1-a0c674a6d702.gif)
+
+#### Enable Lazy Rendering
+
+| Type    | Boolean |
+|---------|---------|
+| Default | false (will be true in 3.0.0)   |
+
+If enabled tooltips and popovers will only be rendered when a user has interacted with the `$target` element or when `isShown=true`. This delay in render time is especially useful when many tooltips exist in a page.
+
 ### Setting Defaults
 
 You can set the default for any option by extending the `{{tooltip-on-element}}` component:
@@ -328,12 +373,13 @@ import TooltipOnElementComponent from 'ember-tooltips/components/tooltip-on-elem
 export default TooltipOnElementComponent.extend({
   effect: 'fade',
   side: 'bottom',
+  enableLazyRendering: true,
 });
 ```
 
 ## Actions
 
-Four actions are available for you to hook onto through the tooltip lifecycle:
+Four actions are available for you to hook onto through the tooltip/popover lifecycle:
 
 ```hbs
 {{tooltip-on-component

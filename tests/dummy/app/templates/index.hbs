@@ -25,6 +25,7 @@
   isShown=showLogoTooltip
   side='right'
   spacing=15
+  enableLazyRendering=true
 }}
   Tooltips
 {{/tooltip-on-element}}
@@ -50,6 +51,7 @@
     <li><a href="#duration">Show for duration</a></li>
     <li><a href="#styling">Using custom styling</a></li>
     <li><a href="#async">Using async content</a></li>
+    <li><a href="#popover">Using a popover instead of a tooltip</a></li>
   </ul>
 </div>
 
@@ -61,7 +63,7 @@
 {{#some-component}}
   Hover for more info
 
-  {{#tooltip-on-component}}
+  {{#tooltip-on-component enableLazyRendering=true}}
     Here is the info!
   {{/tooltip-on-component}}
 {{/some-component}}
@@ -78,7 +80,7 @@
 <div class="some-component">
   Click for more info
 
-  {{#tooltip-on-element event='click'}}
+  {{#tooltip-on-element event='click' enableLazyRendering=true}}
     Here is the info!
   {{/tooltip-on-element}}
 </div>
@@ -94,7 +96,7 @@
 {{!-- BEGIN-SNIPPET basic-usage-target --}}
 {{input id='my-input' value='Some value'}}
 
-{{#tooltip-on-element target='#my-input' event='focus'}}
+{{#tooltip-on-element target='#my-input' event='focus' enableLazyRendering=true}}
   Here is the info!
 {{/tooltip-on-element}}
 {{!-- END-SNIPPET --}}
@@ -109,7 +111,7 @@
 {{#some-component}}
   Tooltip will show after 1000ms
 
-  {{#tooltip-on-component delay=1000}}
+  {{#tooltip-on-component delay=1000 enableLazyRendering=true}}
     Here is the info!
   {{/tooltip-on-component}}
 {{/some-component}}
@@ -125,7 +127,7 @@
 {{#some-component}}
   Tooltip will disappear after 1000ms
 
-  {{#tooltip-on-component duration=1000}}
+  {{#tooltip-on-component duration=1000 enableLazyRendering=true}}
     Here is the info!
   {{/tooltip-on-component}}
 {{/some-component}}
@@ -149,7 +151,7 @@
 {{#some-component}}
   Show an error
 
-  {{#tooltip-on-component class='tooltip-error'}}
+  {{#tooltip-on-component class='tooltip-error' enableLazyRendering=true}}
     Here is the error!
   {{/tooltip-on-component}}
 {{/some-component}}
@@ -162,7 +164,7 @@
 <div class="page-content">
   <h3 id="async">Using async content</h3>
 
-  <p>In this example, <code>onTooltipShow</code> is used to mimick async behaviour. In reality, you do not need set this for async operations.</p>
+  <p>In this example, <code>onShow</code> is used to mimick async behaviour. In reality, you do not need set this for async operations.</p>
 
   <p>The tooltip will reposition itself whenever the <code>updateFor</code> property changes.</p>
 
@@ -170,7 +172,7 @@
 {{#some-component}}
   Tooltip has async content
 
-  {{#tooltip-on-component updateFor=asyncContent onTooltipShow='setAsyncContent'}}
+  {{#tooltip-on-component updateFor=asyncContent onShow='setAsyncContent' enableLazyRendering=true}}
     {{#if asyncContent}}
       {{asyncContent}}
     {{else}}
@@ -181,5 +183,25 @@
 {{!-- END-SNIPPET --}}
 
   {{code-snippet name='async-content.hbs'}}
+
+</div>
+
+<div class="page-content gray">
+  <h3 id="popover">Using a popover instead of a tooltip</h3>
+
+{{!-- BEGIN-SNIPPET popover --}}
+{{#some-component}}
+  View more information
+
+  {{#popover-on-component enableLazyRendering=true as |popover|}}
+    <h3>More info</h3>
+    <p>Here is more information!</p>
+
+    <button {{action popover.hide}}>Hide</button>
+  {{/popover-on-component}}
+{{/some-component}}
+{{!-- END-SNIPPET --}}
+
+  {{code-snippet name='popover.hbs'}}
 
 </div>

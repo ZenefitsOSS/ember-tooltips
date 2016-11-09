@@ -42,7 +42,7 @@ test('Popover: target focus, popover focus, popover blur', function(assert) {
 	run.later(() => {
 		assertPopoverHide(assert, this);
 		done();
-	}, 10);
+	}, 100);
 
 	assert.expect(8);
 
@@ -90,7 +90,7 @@ test('Popover: target focus, targetInterior focus, popover focus, popover blur',
 	run.later(() => {
 		assertPopoverHide(assert, this);
 		done();
-	}, 10);
+	}, 100);
 
 	assert.expect(10);
 
