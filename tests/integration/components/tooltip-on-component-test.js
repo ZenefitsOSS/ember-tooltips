@@ -9,7 +9,11 @@ moduleForComponent('tooltip-on-component', 'Integration | Component | tooltip-on
 
 test('tooltip-on-component does render when enableLazyRendering=false', function(assert) {
 
-  this.render(hbs`{{tooltip-on-component enableLazyRendering=false}}`);
+  this.render(hbs`
+    {{#some-component}}
+      {{tooltip-on-component enableLazyRendering=false}}
+    {{/some-component}}
+  `);
 
   assert.equal(this.$().text().trim(), '',
     'Should render with no content');
