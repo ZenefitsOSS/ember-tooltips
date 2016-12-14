@@ -24,6 +24,7 @@ Documentation for usage is below:
 - [Options](#options)
   - [Setting defaults](#setting-defaults)
 - [Actions](#actions)
+- [Test Helpers](#test-helpers)
 - [Accessibility](#accessibility)
 
 ## 1.0.0 Release
@@ -41,6 +42,16 @@ Version 2.4.0 introduces lazy rendering. Tooltips and popovers generally don't n
 ### Tooltip on Component
 
 The easiest way to add a tooltip to any component is with the `{{tooltip-on-component}}` component:
+
+```hbs
+{{#my-component}}
+  Hover for more info
+
+  {{tooltip-on-component text='Here is more info!'}}
+{{/my-component}}
+```
+
+Or in block form:
 
 ```hbs
 {{#my-component}}
@@ -71,6 +82,16 @@ Documentation for supported options is located [here](#options).
 If you want to add a tooltip to an element that is not an Ember component, you can do so with `{{tooltip-on-element}}`.
 
 By default, the tooltip will attach itself to its parent element:
+
+```hbs
+<div>
+  Hover for more info
+
+  {{tooltip-on-element text='Here is more info!'}}
+</div>
+```
+
+Or in block form:
 
 ```hbs
 <div>
@@ -388,6 +409,64 @@ Four actions are available for you to hook onto through the tooltip/popover life
   onRender='onRender'
   onShow='onShow'
 }}
+```
+
+## Test Helpers
+
+This addon exposes testing helpers which can be used inside of the consuming app's acceptance and integration tests. We use a tooltip-centric naming convention but these can also be used to test popovers.
+
+* `assertTooltipVisible(assert)`: asserts if the tooltip is visible. It checks two attributes on the $tooltip: aria-hidden and data-tether-enabled.
+* `assertTooltipNotVisible(assert)`: asserts if the tooltip is not visible. It checks two attributes on the $tooltip: aria-hidden and data-tether-enabled.
+* `assertTooltipRendered(assert)`: asserts if the tooltip has been rendered. When enableLazyRendering is true the tooltip will only be rendered after the user has interacted with the $target element. A tooltip can be rendered but not visible.
+* `assertTooltipNotRendered(assert)`: asserts if the tooltip has not been rendered. When enableLazyRendering is true the tooltip will only be rendered after the user has interacted with the $target element.
+* `triggerTooltipTargetEvent($targetElement, eventName)`: triggers an event on the passed element. The event will be triggered within an Ember.run so that the tooltip's asynchronicity is accounted for. eventName can be mouseenter, mouseleave, click, focus, focusin, and blur.
+
+Each test helper also accepts an `options` object as a final parameter. If a `selector` property is provided the assertions and actions will be run against the single element found from that selector.
+
+```
+import { assertTooltipVisible, assertTooltipNotVisible, assertTooltipRendered, assertTooltipNotRendered, triggerTooltipTargetEvent } from '../helpers/ember-tooltips';
+
+
+...
+
+
+this.render(hbs`{{tooltip-on-element text='some text' enableLazyRendering=true}}`);
+
+const $tooltipTarget = this.$();
+
+assertTooltipNotRendered(assert);
+
+triggerTooltipTargetEvent($tooltipTarget, 'mouseenter');
+
+assertTooltipRendered(assert);
+
+assertTooltipVisible(assert);
+
+triggerTooltipTargetEvent($tooltipTarget, 'mouseleave');
+
+assertTooltipNotVisible(assert);
+
+
+...
+
+
+this.render(hbs`
+  <div class="tooltip-one-target">
+    {{tooltip-on-element enableLazyRendering=true class='tooltip-one'}}
+  </div>
+  <div class="tooltip-two-target">
+    {{tooltip-on-element enableLazyRendering=true class='tooltip-two'}}
+  </div>
+`);
+
+const $tooltipOneTarget = this.$('.tooltip-one-target');
+
+triggerTooltipTargetEvent($tooltipOneTarget, 'mouseenter');
+
+assertTooltipVisible(assert, {selector: '.tooltip-one'});
+
+assertTooltipNotRendered(assert, {selector: '.tooltip-two'});
+
 ```
 
 ## Accessibility
