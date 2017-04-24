@@ -132,3 +132,24 @@
     }
   }
 }
+
+// this fixes scrolling issues, when hidden popovers are hidden only with opacity:0
+// so they still take space and interfere with the scroll
+.ember-tooltip[aria-hidden="true"],
+.ember-popover[aria-hidden="true"] {
+	animation: sendPopoverOutOfScreen 300s linear forwards;
+}
+
+@keyframes sendPopoverOutOfScreen {
+	0% {
+		top: 0px;
+	}
+
+	99% {
+		top: 0px;
+	}
+
+	100% {
+		top: -9999px;
+	}
+}
